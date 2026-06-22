@@ -396,5 +396,10 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# JetBrains Rider
 *.sln.iml
+
+# Prevent ignoring SqlServerTypes DLL files
+!**/SqlServerTypes/x64/
+!**/SqlServerTypes/x86/
+!**/SqlServerTypes/x64/*.dll
+!**/SqlServerTypes/x86/*.dll
