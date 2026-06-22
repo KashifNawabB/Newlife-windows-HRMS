@@ -403,3 +403,10 @@ FodyWeavers.xsd
 !**/SqlServerTypes/x86/
 !**/SqlServerTypes/x64/*.dll
 !**/SqlServerTypes/x86/*.dll
+
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
