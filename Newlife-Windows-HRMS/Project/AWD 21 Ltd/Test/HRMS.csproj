@@ -307,8 +307,15 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="database\ADW21Ltd_Db.db" />
-    <None Include="database\ADW21Ltd_Db_Testdb.db" />
+    <Content Include="database\ADW21Ltd_Db.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="database\ADW21Ltd_Db_Testdb.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="database\NewlifeDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="EmployeeDataset.xsc">
       <DependentUpon>EmployeeDataset.xsd</DependentUpon>
     </None>
