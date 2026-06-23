@@ -21,11 +21,54 @@ namespace Test
 
         public string setConnectionString()
         {
-            // Update to use the newly created NewlifeDB.db in the database folder
+            // Update to use the newly created NewlifeDB.db in a writable per-user directory
             string Database = "NewlifeDB.db";
-            string dbPath = Path.Combine(Application.StartupPath, $"database\\{Database}");
+            string appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "NewlifeHRMS");
             
+            try
+            {
+                if (!Directory.Exists(appData))
+                {
+                    Directory.CreateDirectory(appData);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Failed to create app data directory: " + ex.Message);
+            }
+
+            string dbPath = Path.Combine(appData, Database);
+            string installedDb = Path.Combine(Application.StartupPath, $"database\\{Database}");
+
+            try
+            {
+                if (!File.Exists(dbPath) && File.Exists(installedDb))
+                {
+                    File.Copy(installedDb, dbPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Failed to copy database: " + ex.Message);
+            }
+
             string connectionString = $"Data Source={dbPath};";
+
+            // Dynamically update settings connection string for TableAdapters / crystal reports
+            try
+            {
+                var settingsProperty = global::Test.Properties.Settings.Default.Properties["ADW21Ltd_Db_TestdbConnectionString"];
+                if (settingsProperty != null)
+                {
+                    settingsProperty.IsReadOnly = false;
+                    global::Test.Properties.Settings.Default["ADW21Ltd_Db_TestdbConnectionString"] = connectionString;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Failed to update application settings connection string: " + ex.Message);
+            }
+
             return connectionString;
         }
 
